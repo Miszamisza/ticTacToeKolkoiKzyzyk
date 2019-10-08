@@ -1,34 +1,39 @@
 package gameMechanism;
 
+import graficInterface.ActionFrame;
+import graficInterface.TicTacToeMenu;
+
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
 public class DrowResult extends JFrame implements ActionListener {
 
-    protected void drowResult() {
-        if (0==7){
+    private JButton jButton;
 
+    public DrowResult(){
+        int buttonPlaceX = 80;
+        String[] labels = {"Jeszcze raz", "Koniec"};
+        for (String label : labels) {
+            jButton = new JButton (label);
+            add (jButton);
+            jButton.setBounds (buttonPlaceX, 150, 120, 40);
+            jButton.addActionListener (this);
+            buttonPlaceX += 140;
         }
 
-        JButton b = new JButton ("Ok");
-        JPanel jPanel = new JPanel ();
-        JWindow jWindow = new JWindow ();
-
-        b.addActionListener (this);
-        jPanel.add (b);
-        jPanel.setVisible (true);
-        jPanel.setSize (40, 40);
-        jWindow.add (jPanel);
-        jWindow.setVisible (true);
-
+        setLayout (null);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand ();
-        if (s.equals ("Ok")) {
-            setDefaultCloseOperation (WindowConstants.EXIT_ON_CLOSE);
+        if (s.equals ("Jeszcze raz")) {
+            dispose ();
+            ActionFrame.run (new TicTacToeMenu (), ActionFrame.WIDTH, ActionFrame.HEIGHT);
+        }
+        else if (s.equals ("Koniec")){
+            ActionFrame.close (TicTacToeMenu.getFrames ());
         }
     }
 }
